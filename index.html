@@ -202,6 +202,35 @@ nav.scrolled{background:rgba(5,5,16,0.85);backdrop-filter:blur(20px) saturate(18
 footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.06);padding:40px 0;text-align:center}
 footer p{font-size:13px;color:var(--text-secondary)}
 
+/* ===== MUSIC PLAYER ===== */
+.music-player{position:fixed;top:80px;right:28px;z-index:998;display:flex;flex-direction:column;align-items:flex-end;gap:10px;transition:all .4s}
+.music-btn{width:44px;height:44px;border-radius:14px;background:rgba(18,18,42,0.85);backdrop-filter:blur(12px);border:1px solid rgba(108,92,231,0.25);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text);transition:all .3s;position:relative}
+.music-btn:hover{border-color:var(--primary);box-shadow:0 0 20px rgba(108,92,231,0.3)}
+.music-btn .music-icon{transition:transform .3s}
+.music-btn.playing .music-icon{animation:musicSpin 3s linear infinite}
+@keyframes musicSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.music-btn .eq-bars{display:none;position:absolute;bottom:6px;left:50%;transform:translateX(-50%);gap:2px}
+.music-btn.playing .eq-bars{display:flex}
+.music-btn .eq-bars span{width:2px;height:8px;background:var(--primary);border-radius:1px;animation:eqBounce .8s ease-in-out infinite}
+.music-btn .eq-bars span:nth-child(2){animation-delay:.15s}
+.music-btn .eq-bars span:nth-child(3){animation-delay:.3s}
+@keyframes eqBounce{0%,100%{height:4px}50%{height:10px}}
+.music-expanded{background:rgba(18,18,42,0.92);backdrop-filter:blur(16px);border:1px solid rgba(108,92,231,0.2);border-radius:16px;padding:16px 20px;width:260px;opacity:0;pointer-events:none;transform:translateY(-10px);transition:all .3s}
+.music-expanded.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.music-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.music-artist{font-size:11px;color:var(--text-secondary);margin-bottom:12px}
+.music-progress-wrap{width:100%;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;cursor:pointer;margin-bottom:12px;position:relative}
+.music-progress{height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:2px;width:0%;transition:width .3s linear}
+.music-controls{display:flex;align-items:center;justify-content:center;gap:16px}
+.music-ctrl{background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:16px;transition:all .3s;padding:4px}
+.music-ctrl:hover{color:#fff}
+.music-ctrl.play-pause{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#8b5cf6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px}
+.music-ctrl.play-pause:hover{transform:scale(1.1)}
+.music-volume{display:flex;align-items:center;gap:8px;margin-top:10px}
+.music-volume input[type=range]{flex:1;height:3px;-webkit-appearance:none;background:rgba(255,255,255,0.15);border-radius:2px;outline:none}
+.music-volume input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--primary);cursor:pointer}
+.music-vol-icon{font-size:14px;color:var(--text-secondary);cursor:pointer}
+
 /* ========== FLOATING ROBOT ========== */
 .floating-robot{position:fixed;bottom:28px;right:28px;z-index:999;width:340px;transition:all .4s}
 .robot-toggle{width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,var(--primary),#8b5cf6);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;box-shadow:0 6px 30px rgba(108,92,231,0.4);transition:all .3s;position:relative;margin-left:auto}
@@ -209,7 +238,8 @@ footer p{font-size:13px;color:var(--text-secondary)}
 .robot-toggle .pulse-ring{position:absolute;inset:-4px;border-radius:22px;border:2px solid var(--primary);animation:robotPulse 2s ease-in-out infinite}
 @keyframes robotPulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.4);opacity:0}}
 .robot-panel{position:absolute;bottom:70px;right:0;width:340px;background:var(--card);border:1px solid rgba(108,92,231,0.2);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.5);overflow:hidden;transform:translateY(20px);opacity:0;pointer-events:none;transition:all .4s}
-.robot-panel.open{transform:translateY(0);opacity:1;pointer-events:auto}
+.robot-panel.open{transform:translateY(0);opacity:1;pointer-events:auto;animation:robotGlow 3s ease-in-out infinite}
+@keyframes robotGlow{0%,100%{box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 30px rgba(108,92,231,0.1)}50%{box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 40px rgba(108,92,231,0.2)}}
 .robot-panel-header{padding:16px 20px;background:linear-gradient(135deg,var(--primary),#8b5cf6);display:flex;align-items:center;gap:10px}
 .robot-panel-header .robot-face{font-size:24px}
 .robot-panel-header .robot-name{font-size:15px;font-weight:700;color:#fff}
@@ -242,6 +272,8 @@ footer p{font-size:13px;color:var(--text-secondary)}
 .services-tab{padding:8px 14px;font-size:12px}
 .floating-robot{width:280px;bottom:16px;right:16px}
 .robot-panel{width:280px}
+.music-player{top:70px;right:16px}
+.music-expanded{width:220px;padding:12px 14px}
 }
 </style>
 </head>
@@ -370,30 +402,51 @@ footer p{font-size:13px;color:var(--text-secondary)}
 <h2 class="section-title reveal">系统验证进展</h2>
 <p class="section-subtitle reveal">以下截图均来自商汤办公小浣熊OPC平台真实运行过程</p>
 <div class="results-grid">
+
 <!-- Card 1: 飞书数据仪表盘 -->
 <div class="result-card reveal reveal-delay-1"><div class="result-card-inner">
-<div style="padding:24px 24px 0"><span style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:8px;font-size:13px;font-weight:600;background:rgba(0,184,148,0.12);color:#00b894;border:1px solid rgba(0,184,148,0.2)">✅ 已搭建</span><div style="font-size:20px;font-weight:800;color:#fff;margin:12px 0 8px">飞书数据仪表盘</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">7张Sheet · 76个字段 · 全部专家共享读写 · 企业名称区分不同客户</div></div>
-<img class="result-img" src="screenshot2_feishu.png" alt="飞书仪表盘截图区域" style="padding:0 16px 16px" onerror="this.parentElement.querySelector('img').style.display='none'">
-<div style="padding:0 24px 24px"><div style="font-size:11px;color:var(--text-secondary);text-align:center">📊 仪表盘截图区域：Sheet1-经营诊断 / Sheet2-企业画像 / Sheet3-竞品监测 / Sheet4-政策追踪 / Sheet5-审计日志 / Sheet6-趋势预警 / Sheet7-服务记录</div></div>
+<div style="padding:24px 24px 0">
+<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:8px;font-size:13px;font-weight:600;background:rgba(0,184,148,0.12);color:#00b894;border:1px solid rgba(0,184,148,0.2)">✅ 已搭建</span>
+<div style="font-size:20px;font-weight:800;color:#fff;margin:12px 0 8px">飞书数据仪表盘</div>
+<div style="font-size:13px;color:var(--text-secondary);line-height:1.6">7张Sheet已创建完成，Sheet1经营诊断已录入3家企业实测数据：杭州云启76.80分、鸿诚装饰72.00分、南京冠诚61.00分。所有专家共享同一数据底座，企业名称区分不同客户。</div>
+</div>
+<img class="result-img" src="screenshot2_feishu.png" alt="飞书仪表盘：Sheet1已录入3家企业经营诊断数据" style="padding:0 16px 16px" onerror="this.style.display='none'">
+<div style="padding:0 24px 24px"><div style="font-size:11px;color:var(--text-secondary);text-align:center">📊 截图内容：飞书多维表格「商业研究仪表盘」— 左侧7张Sheet导航（经营诊断/企业画像/竞品监测/政策追踪/审计日志/趋势预警/服务记录），主视图Sheet1已录入3条企业经营诊断记录，含综合分、利润/获客/客户/运营/风险5维得分</div></div>
 </div></div>
+
 <!-- Card 2: A线经营体检闭环 -->
 <div class="result-card reveal reveal-delay-2"><div class="result-card-inner">
-<div style="padding:24px 24px 0"><span style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:8px;font-size:13px;font-weight:600;background:rgba(108,92,231,0.12);color:var(--primary-light);border:1px solid rgba(108,92,231,0.2)"> 验证中</span><div style="font-size:20px;font-weight:800;color:#fff;margin:12px 0 8px">A线经营体检闭环</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">仿真企业喂入真实经营数据 → 诊断师5维评分 → score.py硬算 → 写入Sheet1+Sheet6</div></div>
-<img class="result-img" src="screenshot3_diagnosis.png" alt="A线体检评分卡截图区域" style="padding:0 16px 16px" onerror="this.style.display='none'">
-<div style="padding:0 24px 24px"><div style="font-size:11px;color:var(--text-secondary);text-align:center">📋 A线体检评分卡截图区域：综合评分 / 利润得分 / 获客得分 / 客户得分 / 运营得分 / 风险得分</div></div>
+<div style="padding:24px 24px 0">
+<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:8px;font-size:13px;font-weight:600;background:rgba(108,92,231,0.12);color:var(--primary-light);border:1px solid rgba(108,92,231,0.2)">🔄 验证中</span>
+<div style="font-size:20px;font-weight:800;color:#fff;margin:12px 0 8px">A线经营体检闭环</div>
+<div style="font-size:13px;color:var(--text-secondary);line-height:1.6">喂入仿真企业经营数据（签约435.4万/回款386.2万/未收款98.3万）→ 经营诊断师5维评分 → 综合61分黄灯偏红 → 利润21/30、获客13/25、客户9/20、运营11/15、风险7/10 → 写入Sheet1+趋势预警Sheet6。</div>
+</div>
+<img class="result-img" src="screenshot3_diagnosis.png" alt="装饰工程有限公司经营体检报告：61分，5维评分表" style="padding:0 16px 16px" onerror="this.style.display='none'">
+<div style="padding:0 24px 24px"><div style="font-size:11px;color:var(--text-secondary);text-align:center">📋 截图内容：装饰工程有限公司经营体检报告 — 顶部4个核心指标卡（年签约金额435.4万 / 实际回款386.2万 / 未收款98.3万 / 加权毛利率31.4%），下方5维经营评分表（利润/获客/客户/运营/风险），综合结论61/100黄灯偏红</div></div>
 </div></div>
+
 <!-- Card 3: K线政策雷达闭环 -->
 <div class="result-card reveal reveal-delay-3"><div class="result-card-inner">
-<div style="padding:24px 24px 0"><span style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:8px;font-size:13px;font-weight:600;background:rgba(225,112,85,0.12);color:var(--danger);border:1px solid rgba(225,112,85,0.2)">⏳ 待验证</span><div style="font-size:20px;font-weight:800;color:#fff;margin:12px 0 8px">K线政策雷达闭环</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">哨兵定时搜索政策 → 匹配受影响企业 → 方案架构师出申报方案</div></div>
-<img class="result-img" src="screenshot4_policy.png" alt="政策匹配结果截图区域" style="padding:0 16px 16px" onerror="this.style.display='none'">
-<div style="padding:0 24px 24px"><div style="font-size:11px;color:var(--text-secondary);text-align:center">🔍 政策匹配结果截图区域：政策名称 / 发布机构 / 补贴金额 / 截止日期 / 匹配企业</div></div>
+<div style="padding:24px 24px 0">
+<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:8px;font-size:13px;font-weight:600;background:rgba(225,112,85,0.12);color:var(--danger);border:1px solid rgba(225,112,85,0.2)"> 部分验证</span>
+<div style="font-size:20px;font-weight:800;color:#fff;margin:12px 0 8px">K线政策雷达闭环</div>
+<div style="font-size:13px;color:var(--text-secondary);line-height:1.6">哨兵定时执行成功：已搜索近3天政策/补贴/法规 → 对比表内既有记录，发现新增1条「江苏省《人工智能+住房城乡建设》行动方案」→ 已写入飞书Sheet4政策追踪。本次无7天内截止的紧急项。闭环后半段（匹配企业→出申报方案）待完整验证。</div>
+</div>
+<img class="result-img" src="screenshot4_policy.png" alt="政策雷达运行记录：新增江苏省AI+住建行动方案" style="padding:0 16px 16px" onerror="this.style.display='none'">
+<div style="padding:0 24px 24px"><div style="font-size:11px;color:var(--text-secondary);text-align:center">🔍 截图内容：OPC定时任务「政策雷达」第5/6步执行记录 — 已读取Sheet4政策追踪 + knowledge-base政策库 → 检索近3天政策 → 新增1条「江苏省《人工智能+住房城乡建设》行动方案」→ 写入飞书Sheet4 → 无7天内截止紧急项</div></div>
 </div></div>
-<!-- Card 4: 4条闭环数据流转 -->
+
+<!-- Card 4: 一句话交付营销策略报告 -->
 <div class="result-card reveal reveal-delay-4"><div class="result-card-inner">
-<div style="padding:24px 24px 0"><span style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:8px;font-size:13px;font-weight:600;background:rgba(108,92,231,0.12);color:var(--primary-light);border:1px solid rgba(108,92,231,0.2)">🔄 验证中</span><div style="font-size:20px;font-weight:800;color:#fff;margin:12px 0 8px">4条闭环数据流转</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.6">跨专家数据自动流转验证：诊断→趋势→改善；竞品→定价→策略</div></div>
-<img class="result-img" src="screenshot1_strategy.png" alt="闭环流转截图区域" style="padding:0 16px 16px" onerror="this.style.display='none'">
-<div style="padding:0 24px 24px"><div style="font-size:11px;color:var(--text-secondary);text-align:center">🔄 闭环流转截图区域：展示数据在不同专家Sheet间流转的实际效果</div></div>
+<div style="padding:24px 24px 0">
+<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:8px;font-size:13px;font-weight:600;background:rgba(0,184,148,0.12);color:#00b894;border:1px solid rgba(0,184,148,0.2)">✅ 已交付</span>
+<div style="font-size:20px;font-weight:800;color:#fff;margin:12px 0 8px">一句话交付营销策略报告</div>
+<div style="font-size:13px;color:var(--text-secondary);line-height:1.6">输入「智能血压监测仪上市营销策略，预算50万」→ 市场研究员分析行业格局 + 风险审计师检查合规 + 方案架构师出渠道策略 → 输出完整营销策略Markdown报告，含Source溯源（企业信息/产品资质/预算目标）和QA质控清单（标题/任务分类/专家动作/90天计划逐项核验）。</div>
+</div>
+<img class="result-img" src="screenshot1_strategy.png" alt="智能血压监测仪营销策略报告交付记录" style="padding:0 16px 16px" onerror="this.style.display='none'">
+<div style="padding:0 24px 24px"><div style="font-size:11px;color:var(--text-secondary);text-align:center"> 截图内容：营销策略报告交付确认 — Created文件「智能血压监测仪上市营销策略报告(Markdown)」，Source区记录输入信息（初创医疗科技公司/智能血压监测仪/NMPA二类注册证/50万预算），QA区完成6项质控校验（标题/任务分类/专家动作/逻辑·预算·合规·90天行动计划与风险预警）</div></div>
 </div></div>
+
 </div>
 </div>
 </section>
@@ -468,10 +521,29 @@ footer p{font-size:13px;color:var(--text-secondary)}
 </div>
 </footer>
 
+<!-- ===== MUSIC PLAYER ===== -->
+<div class="music-player" id="musicPlayer">
+<div class="music-expanded" id="musicExpanded">
+<div class="music-title">孤独の造物</div>
+<div class="music-artist">STYX HELIX · MYTH & ROID</div>
+<div class="music-progress-wrap" id="musicProgressWrap"><div class="music-progress" id="musicProgress"></div></div>
+<div class="music-controls">
+<button class="music-ctrl" onclick="musicSkip(-10)" title="后退10秒">⏮</button>
+<button class="music-ctrl play-pause" id="musicPlayBtn" onclick="musicToggle()">▶</button>
+<button class="music-ctrl" onclick="musicSkip(10)" title="前进10秒">⏭</button>
+</div>
+<div class="music-volume">
+<span class="music-vol-icon" onclick="musicToggleMute()">🔊</span>
+<input type="range" id="musicVolume" min="0" max="100" value="50" oninput="musicSetVolume(this.value)">
+</div>
+</div>
+<button class="music-btn" id="musicToggleBtn" onclick="musicTogglePanel()">🎵</button>
+</div>
+
 <!-- ===== FLOATING ROBOT ===== -->
 <div class="floating-robot">
-<div class="robot-panel" id="robotPanel">
-<div class="robot-panel-header"><span class="robot-face">🤖</span><div><div class="robot-name">网站小助手</div><div class="robot-status">● 在线运行中</div></div></div>
+<div class="robot-panel open" id="robotPanel">
+<div class="robot-panel-header"><span class="robot-face">🤖</span><div><div class="robot-name">网站小机器人</div><div class="robot-status">● 在线运行中</div></div></div>
 <div class="robot-messages" id="robotMessages"></div>
 <div class="robot-nav">
 <a href="#architecture">🏗️ 看架构</a>
@@ -524,14 +596,14 @@ contentsEl.appendChild(content);
 
 // ===== FLOATING ROBOT =====
 const robotTips=[
-{type:'highlight',text:'🏢 我是网站小助手！这个工作室有9位AI专家，一句话就能帮你做商业研究~'},
+{type:'highlight',text:'🤖 我是网站小机器人！9位AI专家待命，一句话就能帮你做商业研究~'},
 {type:'success',text:'✅ 已服务装饰、电商、医疗、建材等13个行业'},
 {type:'highlight',text:'📊 4条数据闭环让系统越用越聪明，像滚雪球积累商业知识'},
 {type:'success',text:'🚀 经营体检实测：10分钟出具61分评分卡+90天行动计划'},
 {type:'highlight',text:'💾 所有服务数据自动沉淀到飞书7张Sheet，形成企业专属知识库'},
 {type:'success',text:'🏗️ 六层架构：输入→调度→执行→质控→数据→输出，层层把关'}
 ];
-let currentTip=0,robotOpen=false;
+let currentTip=0,robotOpen=true;
 function toggleRobot(){robotOpen=!robotOpen;document.getElementById('robotPanel').classList.toggle('open',robotOpen)}
 function showNextTip(){
 const msgs=document.getElementById('robotMessages');
@@ -544,6 +616,26 @@ setTimeout(()=>{showNextTip();setInterval(showNextTip,4000)},2000);
 // ===== CHAT ANIMATION =====
 const chatObserver=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.chat-msg').forEach((m,i)=>{m.style.animationDelay=(i*0.7)+'s';m.style.animationPlayState='running'});chatObserver.unobserve(e.target)}})},{threshold:0.3});
 chatObserver.observe(document.getElementById('chatDemo'));
+
+// ===== MUSIC PLAYER =====
+const musicEl=new Audio('bg_music.mp3');
+musicEl.preload='none';musicEl.loop=true;musicEl.volume=0.5;
+let musicExpanded2=false,musicPlaying=false;
+function musicTogglePanel(){musicExpanded2=!musicExpanded2;document.getElementById('musicExpanded').classList.toggle('show',musicExpanded2)}
+function musicToggle(){
+if(!musicPlaying){musicEl.play().then(()=>{musicPlaying=true;updateMusicUI()}).catch(()=>{})}
+else{musicEl.pause();musicPlaying=false;updateMusicUI()}
+}
+function updateMusicUI(){
+const btn=document.getElementById('musicPlayBtn');const toggleBtn=document.getElementById('musicToggleBtn');
+if(musicPlaying){btn.textContent='';toggleBtn.classList.add('playing')}
+else{btn.textContent='▶';toggleBtn.classList.remove('playing')}
+}
+function musicSkip(sec){musicEl.currentTime=Math.max(0,Math.min(musicEl.duration||0,musicEl.currentTime+sec))}
+function musicSetVolume(v){musicEl.volume=v/100;document.querySelector('.music-vol-icon').textContent=v==0?'':v<50?'':'🔊'}
+function musicToggleMute(){musicEl.muted=!musicEl.muted;document.querySelector('.music-vol-icon').textContent=musicEl.muted?'🔇':'🔊'}
+musicEl.addEventListener('timeupdate',()=>{if(musicEl.duration){document.getElementById('musicProgress').style.width=(musicEl.currentTime/musicEl.duration*100)+'%'}});
+document.getElementById('musicProgressWrap').addEventListener('click',function(e){if(musicEl.duration){const rect=this.getBoundingClientRect();musicEl.currentTime=(e.clientX-rect.left)/rect.width*musicEl.duration}});
 </script>
 </body>
 </html>
