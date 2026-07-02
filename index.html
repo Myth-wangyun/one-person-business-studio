@@ -469,39 +469,76 @@ footer p{font-size:13px;color:var(--text-secondary)}
 <!-- ===== PROMPT GENERATOR ===== -->
 <section id="prompt-demo" style="background:linear-gradient(180deg,transparent,rgba(108,92,231,0.03),transparent)">
 <div class="container">
-<div class="section-tag reveal">💬 交互体验</div>
-<h2 class="section-title reveal">一句话，专家团队自动工作</h2>
-<p class="section-subtitle reveal">看看AI专家团如何从一句话需求到完整交付</p>
-<div class="prompt-gen reveal">
-<div class="prompt-gen-header"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><span class="title">小浣熊 OPC — 智能对话窗口</span></div>
-<div class="prompt-chat">
-<div class="prompt-demo" id="chatDemo">
-<div class="chat-msg user" style="animation-delay:.3s"><div class="chat-avatar">👤</div><div class="chat-bubble">我是做智能血压计的，帮我做一份营销策略，预算50万，目标国内市场</div></div>
-<div class="chat-msg bot" style="animation-delay:1s"><div class="chat-avatar">🤖</div><div class="chat-bubble">
-<div style="margin-bottom:10px"><strong>✅ 已收到，正在为您调度专家团...</strong></div>
-<div class="step"><span class="step-num">1</span><span>🔭 市场研究员 正在分析智能血压计市场规模、竞品格局、目标用户画像...</span></div>
-<div class="step"><span class="step-num">2</span><span>🛡️ 风险审计师 正在检查医疗器械广告合规要求、营销法律风险...</span></div>
-<div class="step"><span class="step-num">3</span><span>🏗️ 方案架构师 正在制定50万预算分配方案、渠道策略、90天行动计划...</span></div>
-<div class="step"><span class="step-num">4</span><span>✅ 交付质控师 正在验证数据来源、检查方案完整性...</span></div>
-<div style="margin-top:14px;padding:14px;background:rgba(0,184,148,0.08);border-radius:12px;border:1px solid rgba(0,184,148,0.15)">
-<div style="font-weight:700;color:#00b894;margin-bottom:8px">📦 交付物已生成</div>
-<div style="font-size:12px;color:var(--text-secondary)">
-✓ 智能血压计营销策略报告（PDF）<br>
-✓ 50万预算分配表（Excel）<br>
-✓ 90天行动计划 & 渠道策略<br>
-✓ 医疗器械营销合规清单<br>
-✓ 数据已同步至飞书仪表盘
+<div class="section-tag reveal">💬 提示词生成器</div>
+<h2 class="section-title reveal">生成专家团提示词，去小浣熊OPC一键使用</h2>
+<p class="section-subtitle reveal">输入你的商业需求 → 自动生成结构化提示词 → 复制到小浣熊OPC专家团对话中执行</p>
+
+<div class="prompt-gen reveal" style="margin-top:40px">
+<div class="prompt-gen-header"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><span class="title">提示词生成器 — 输入需求，输出OPC可用提示词</span></div>
+<div style="padding:32px">
+
+<!-- Input area -->
+<div style="margin-bottom:24px">
+<label style="font-size:14px;font-weight:600;color:#fff;display:block;margin-bottom:10px"> 选择服务类型</label>
+<select id="pgService" style="width:100%;padding:12px 16px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;font-size:14px;outline:none;cursor:pointer">
+<option value="A">🏥 A线 · 经营体检</option>
+<option value="B">🔭 B线 · 市场调研</option>
+<option value="C">🔍 C线 · 竞品盯梢</option>
+<option value="D">🛡️ D线 · 合规风控</option>
+<option value="E">📈 E线 · 运营分析</option>
+<option value="F">️ F线 · 商机转化</option>
+<option value="G" selected>📦 G线 · 营销弹药库</option>
+<option value="H">🎨 H线 · 报告美化</option>
+<option value="I">✅ I线 · 质量把关</option>
+<option value="J">📄 J线 · 合同体检</option>
+<option value="K">📜 K线 · 政策雷达</option>
+<option value="L">📊 L线 · 趋势预警</option>
+<option value="M">🔁 M线 · 服务追踪</option>
+</select>
+</div>
+
+<div style="margin-bottom:24px">
+<label style="font-size:14px;font-weight:600;color:#fff;display:block;margin-bottom:10px">② 描述你的需求（越具体越好）</label>
+<textarea id="pgInput" rows="4" placeholder="例如：我是做智能血压监测仪的初创公司，想做一份国内市场营销策略，预算50万，3个月内落地..." style="width:100%;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;font-size:14px;resize:vertical;outline:none;font-family:inherit"></textarea>
+</div>
+
+<div style="margin-bottom:24px">
+<label style="font-size:14px;font-weight:600;color:#fff;display:block;margin-bottom:10px">③ 补充信息（可选）</label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<input id="pgIndustry" placeholder="行业/产品类型" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;font-size:13px;outline:none">
+<input id="pgBudget" placeholder="预算范围（如有）" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;font-size:13px;outline:none">
+<input id="pgTimeline" placeholder="时间要求（如有）" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;font-size:13px;outline:none">
+<input id="pgTarget" placeholder="目标市场/客户群体" style="padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;font-size:13px;outline:none">
 </div>
 </div>
-</div></div>
+
+<button onclick="generatePrompt()" style="width:100%;padding:14px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#8b5cf6);color:#fff;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:all .3s;margin-bottom:24px" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">⚡ 生成提示词</button>
+
+<!-- Output area -->
+<div id="pgOutput" style="display:none">
+<div style="background:rgba(0,206,201,0.06);border:1px solid rgba(0,206,201,0.2);border-radius:14px;padding:20px;margin-bottom:16px">
+<div style="font-size:13px;font-weight:600;color:var(--secondary);margin-bottom:12px">📋 生成的提示词（点击下方复制）</div>
+<pre id="pgResult" style="white-space:pre-wrap;word-break:break-all;font-size:13px;color:var(--text);line-height:1.8;background:rgba(0,0,0,0.3);padding:16px;border-radius:10px;margin:0;max-height:400px;overflow-y:auto"></pre>
+<button onclick="copyPrompt()" id="pgCopyBtn" style="margin-top:14px;padding:10px 24px;border-radius:10px;background:rgba(0,206,201,0.15);border:1px solid rgba(0,206,201,0.3);color:var(--secondary);font-size:13px;font-weight:600;cursor:pointer;transition:all .3s">📋 复制提示词</button>
+</div>
+<div style="background:rgba(253,203,110,0.06);border:1px solid rgba(253,203,110,0.2);border-radius:14px;padding:20px">
+<div style="font-size:14px;font-weight:600;color:var(--warning);margin-bottom:10px">️ 使用指引</div>
+<div style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+<p>1. 点击「复制提示词」将上方内容复制到剪贴板</p>
+<p>2. 打开<strong style="color:#fff">商汤办公小浣熊OPC平台</strong>，进入专家团对话</p>
+<p>3. 将提示词粘贴到对话框发送，专家团将自动调度工作</p>
+<p style="margin-top:8px;padding:10px;background:rgba(108,92,231,0.08);border-radius:8px;font-size:12px">💡 提示：本页面仅生成提示词，实际专家团对话和报告生成需在小浣熊OPC平台内完成</p>
 </div>
 </div>
 </div>
+
 </div>
+</div>
+
 </div>
 </section>
 
-<!-- ===== DOWNLOAD ===== -->
+<!-- ===== DOWNLOAD ===== --><!-- ===== DOWNLOAD ===== -->
 <section class="download-section">
 <div class="container">
 <div class="download-card reveal">
@@ -581,10 +618,18 @@ document.querySelectorAll('.hero-stat-value').forEach(el=>counterObserver.observ
 // ===== SERVICE TABS =====
 const services=[
 {tab:'🏥 经营体检',name:'A线 · 经营体检',icon:'🏥',steps:[{icon:'📥',text:'上传财务数据'},{icon:'📊',text:'诊断师分析'},{icon:'📋',text:'输出评分卡'},{icon:'💾',text:'写入飞书'}],output:'5维度评分卡 + 核心问题Top5 + 90天行动计划 + 趋势追踪'},
-{tab:'📦 营销弹药库',name:'G线 · 营销弹药库',icon:'📦',steps:[{icon:'💬',text:'一句话需求'},{icon:'🔭',text:'市场研究'},{icon:'🏗️',text:'方案架构'},{icon:'✅',text:'质控交付'}],output:'营销策略报告 + 预算分配表 + 渠道策略 + 合规清单'},
-{tab:'📜 政策雷达',name:'K线 · 政策雷达',icon:'📜',steps:[{icon:'📡',text:'哨兵搜索'},{icon:'🎯',text:'匹配企业'},{icon:'📝',text:'申报方案'},{icon:'💾',text:'写入仪表盘'}],output:'政策解读 + 申报条件匹配 + 申报方案 + 时间节点'},
+{tab:' 市场调研',name:'B线 · 市场调研',icon:'🔭',steps:[{icon:'',text:'描述行业'},{icon:'',text:'搜索行业数据'},{icon:'',text:'分析市场规模'},{icon:'',text:'输出报告'}],output:'行业市场规模 + 增长趋势 + 用户画像 + 进入壁垒分析'},
 {tab:'🔍 竞品盯梢',name:'C线 · 竞品盯梢',icon:'🔍',steps:[{icon:'📡',text:'哨兵监控'},{icon:'🔭',text:'情报分析'},{icon:'🏗️',text:'策略建议'},{icon:'💾',text:'更新仪表盘'}],output:'竞品动态速报 + 威胁评估 + 应对策略建议'},
-{tab:'📄 合同体检',name:'J线 · 合同体检',icon:'📄',steps:[{icon:'📥',text:'上传合同'},{icon:'🛡️',text:'风险扫描'},{icon:'📝',text:'修改建议'},{icon:'✅',text:'质控输出'}],output:'风险标注版合同 + 条款修改建议 + 风险等级评估'}
+{tab:'🛡️ 合规风控',name:'D线 · 合规风控',icon:'🛡️',steps:[{icon:'📥',text:'输入业务场景'},{icon:'⚖️',text:'法规检索'},{icon:'🔎',text:'风险识别'},{icon:'📋',text:'合规清单'}],output:'法规适用清单 + 合规风险点 + 整改建议 + 处罚案例参考'},
+{tab:'📈 运营分析',name:'E线 · 运营分析',icon:'',steps:[{icon:'📥',text:'输入运营数据'},{icon:'📊',text:'效率分析'},{icon:'🎯',text:'瓶颈定位'},{icon:'💡',text:'改善方案'}],output:'人效/坪效分析 + 流程瓶颈图 + 降本增效方案'},
+{tab:'🏗️ 商机转化',name:'F线 · 商机转化',icon:'🏗️',steps:[{icon:'',text:'捕捉商机'},{icon:'',text:'可行性评估'},{icon:'️',text:'方案设计'},{icon:'',text:'行动计划'}],output:'商机评估报告 + 商业模式设计 + 落地时间表'},
+{tab:'📦 营销弹药库',name:'G线 · 营销弹药库',icon:'',steps:[{icon:'💬',text:'一句话需求'},{icon:'🔭',text:'市场研究'},{icon:'🏗️',text:'方案架构'},{icon:'✅',text:'质控交付'}],output:'营销策略报告 + 预算分配表 + 渠道策略 + 合规清单'},
+{tab:'🎨 报告美化',name:'H线 · 报告美化',icon:'',steps:[{icon:'📥',text:'上传原始报告'},{icon:'🎨',text:'视觉设计'},{icon:'📊',text:'数据可视化'},{icon:'📤',text:'多格式导出'}],output:'PDF/HTML/PPT专业报告 + 数据图表 + 品牌配色'},
+{tab:'✅ 质量把关',name:'I线 · 质量把关',icon:'✅',steps:[{icon:'📥',text:'接收交付物'},{icon:'🔎',text:'数据验证'},{icon:'📊',text:'质量评分'},{icon:'🔄',text:'打回/通过'}],output:'质量评分报告 + 数据来源核验 + 修改建议'},
+{tab:' 合同体检',name:'J线 · 合同体检',icon:'📄',steps:[{icon:'📥',text:'上传合同'},{icon:'🛡️',text:'风险扫描'},{icon:'📝',text:'修改建议'},{icon:'✅',text:'质控输出'}],output:'风险标注版合同 + 条款修改建议 + 风险等级评估'},
+{tab:' 政策雷达',name:'K线 · 政策雷达',icon:'📜',steps:[{icon:'📡',text:'哨兵搜索'},{icon:'🎯',text:'匹配企业'},{icon:'📝',text:'申报方案'},{icon:'💾',text:'写入仪表盘'}],output:'政策解读 + 申报条件匹配 + 申报方案 + 时间节点'},
+{tab:'📊 趋势预警',name:'L线 · 趋势预警',icon:'📊',steps:[{icon:'',text:'采集历史数据'},{icon:'',text:'趋势建模'},{icon:'️',text:'异常预警'},{icon:'📋',text:'周报推送'}],output:'趋势变化图 + 异常指标预警 + 周度经营简报'},
+{tab:'🔁 服务追踪',name:'M线 · 服务追踪',icon:'🔁',steps:[{icon:'',text:'记录服务历史'},{icon:'',text:'效果评估'},{icon:'🔄',text:'改善追踪'},{icon:'💾',text:'知识库沉淀'}],output:'服务效果评估 + 改善进度追踪 + 企业知识库更新'}
 ];
 const tabsEl=document.getElementById('serviceTabs'),contentsEl=document.getElementById('serviceContents');
 services.forEach((s,i)=>{
@@ -636,6 +681,23 @@ function musicSetVolume(v){musicEl.volume=v/100;document.querySelector('.music-v
 function musicToggleMute(){musicEl.muted=!musicEl.muted;document.querySelector('.music-vol-icon').textContent=musicEl.muted?'🔇':'🔊'}
 musicEl.addEventListener('timeupdate',()=>{if(musicEl.duration){document.getElementById('musicProgress').style.width=(musicEl.currentTime/musicEl.duration*100)+'%'}});
 document.getElementById('musicProgressWrap').addEventListener('click',function(e){if(musicEl.duration){const rect=this.getBoundingClientRect();musicEl.currentTime=(e.clientX-rect.left)/rect.width*musicEl.duration}});
+
+// ===== AUTO PLAY =====
+(function autoPlayMusic(){
+  musicEl.play().then(()=>{musicPlaying=true;updateMusicUI()}).catch(()=>{
+    const handler=function(){
+      musicEl.play().then(()=>{musicPlaying=true;updateMusicUI()}).catch(()=>{});
+      document.removeEventListener('click',handler);
+      document.removeEventListener('touchstart',handler);
+      document.removeEventListener('keydown',handler);
+      document.removeEventListener('scroll',handler);
+    };
+    document.addEventListener('click',handler);
+    document.addEventListener('touchstart',handler);
+    document.addEventListener('keydown',handler);
+    document.addEventListener('scroll',handler);
+  });
+})();
 </script>
 </body>
 </html>
